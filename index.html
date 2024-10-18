@@ -4,8 +4,31 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Weather App - Course</title>
+  <link rel="stylesheet" href="/assets/styles.css">
 </head>
 <body>
-  
+  <header>
+    <section class="container">
+      <a href="#" class="logo">
+        <img src="/assets/logo.svg" alt="Weather App">
+        Weather App
+      </a>
+    </section>
+  </header>
+  <main>
+    <section class="hero">
+      <h1>Weather App</h1>
+      <p>Search any location and look the weather</p>
+      <form action="" class="search-form">
+        <div class="form-wrap">
+          <label for="location">Search</label>
+          <input type="search" id="location" name="location" placeholder="San Cristóbal">
+          <div id="locationContainer"></div>
+        </div>
+        <button type="submit">Search</button>
+      </form>
+    </section>
+  </main>
+  <script src="/assets/main.js"></script>
 </body>
 </html>
