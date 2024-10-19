@@ -61,7 +61,7 @@ const showLocationList = (locations) => {
     listContainer.innerHTML += `
       <li data-location='${JSON.stringify(location)}'>
         <img 
-          src="https://www.worldometers.info/img/flags/${location.country_code.toLowerCase()}-flag.gif" 
+          src="https://www.worldatlas.com/r/w236/img/flag/${location.country_code.toLowerCase()}-flag.jpg" 
           onerror="this.onerror=null; this.src='/assets/default-flag.png'">
         <div>
           <p>${location.name}<p>
@@ -98,7 +98,7 @@ const showWeatherInfo = ({current, current_units, ...rest}) => {
 
 const showLocationInfo = (location) => {
   locationWeather.innerHTML = `
-  <img src="https://www.worldometers.info/img/flags/${location.country_code.toLowerCase()}-flag.gif" onerror="this.onerror=null; this.src='/assets/default-flag.png'">
+  <img src="https://www.worldatlas.com/r/w236/img/flag/${location.country_code.toLowerCase()}-flag.jpg" onerror="this.onerror=null; this.src='/assets/default-flag.png'">
   <p>${location.name}, ${location.admin1 || location.admin2}, ${location.country}</p>
   `
 }
