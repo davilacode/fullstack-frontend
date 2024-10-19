@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="/assets/styles.css">
 </head>
 <body>
-  <header>
+  <header class="header">
     <section class="container">
       <a href="#" class="logo">
         <img src="/assets/logo.svg" alt="Weather App">
@@ -32,6 +32,20 @@
           </ul>
         </div>
       </form>
+    </section>
+    <section class="wrap-weather">
+      <div class="container">
+        <div id="locationWeather"></div>
+        <article class="weather">
+          <header>
+            <h3>Current weather</h3>
+            <time id="timeWeather"></time>
+          </header>
+          <div id="currentWeather">
+          </div>
+          <div id="additionalInfo"></div>
+        </article>
+      </div>
     </section>
   </main>
   <script src="/assets/main.js"></script>
