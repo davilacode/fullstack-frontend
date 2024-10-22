@@ -1,9 +1,5 @@
 @charset "UTF-8";
 
-/* Poppins font for titles */
-/* Lato font for general text */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Lato&display=swap');
-
 /* General Styles */
 :root {
   --dark: #0D1B2A
@@ -70,7 +66,7 @@ p {
 
 /* Hero */
 .hero {
-  background: var(--dark) url('/assets/hero.jpg') no-repeat fixed center center/cover;
+  background: var(--dark) url('/assets/hero.webp') no-repeat fixed center center/cover;
   padding: 2rem 0;
   min-height: calc(80dvh);
   display: flex;
@@ -297,10 +293,12 @@ p {
 }
 #forecastWeather span:nth-of-type(1) {
   font-size: 1.2rem;
-  color: #0D1B2A
+  color: #0D1B2A;
+  font-weight: 500;
 }
 #forecastWeather span:nth-of-type(2) {
-  color: #778DA9
+  color: #415A77;
+  font-weight: 500;
 }
 
 .wrap-list-weather .container{
@@ -341,7 +339,7 @@ p {
   margin: 5px;
 }
 .btn-show {
-  background: #778DA9;
+  background: #415A77;
   color: white;
 }
 .btn-delete {
@@ -375,4 +373,20 @@ p {
     flex-flow: column;
     text-align: center;
   }
+}
+
+footer {
+  text-align: center;
+  padding: .5rem;
+  font-size: 1rem;
+  background-color: #0D1B2A;
+  color: #fff;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+}
+a {
+  color: #fff;
+  font-size: 1.2rem;
 }

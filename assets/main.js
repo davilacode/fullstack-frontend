@@ -64,7 +64,8 @@ const showLocationList = (locations) => {
       <li data-location='${JSON.stringify(location)}'>
         <img 
           src="https://www.worldatlas.com/r/w236/img/flag/${location.country_code.toLowerCase()}-flag.jpg" 
-          onerror="this.onerror=null; this.src='/assets/default-flag.png'">
+          onerror="this.onerror=null; this.src='/assets/default-flag.webp'">
+          alt="${location.country} Flag"
         <div>
           <p>${location.name}<p>
           <p>${location.admin1 || location.admin2}<p>
@@ -101,10 +102,10 @@ const showWeatherInfo = ({current, current_units, daily, daily_units, ...rest}) 
   daily.temperature_2m_max.map((temp, i) => {
     forecastWeather.innerHTML += `
       <article>
-        <h4>
+        <h3>
           ${new Intl.DateTimeFormat('en-VE', {weekday: 'short'}).format(new Date(daily.time[i]))}
           ${daily.time[i].slice(-2)}
-        </h4>        
+        </h3>        
         <span>${temp+daily_units.temperature_2m_max}</span>
         <span>${daily.temperature_2m_min[i]+daily_units.temperature_2m_max}</span>
       </article>
@@ -115,7 +116,7 @@ const showWeatherInfo = ({current, current_units, daily, daily_units, ...rest}) 
 
 const showLocationInfo = (location) => {
   locationWeather.innerHTML = `
-  <img src="https://www.worldatlas.com/r/w236/img/flag/${location.country_code.toLowerCase()}-flag.jpg" onerror="this.onerror=null; this.src='/assets/default-flag.png'">
+  <img src="https://www.worldatlas.com/r/w236/img/flag/${location.country_code.toLowerCase()}-flag.jpg" onerror="this.onerror=null; this.src='/assets/default-flag.webp'" alt="${location.country} Flag">
   <p>${location.name}, ${location.admin1 || location.admin2}, ${location.country}</p>
   `
 }
@@ -203,7 +204,7 @@ const showAllLocationWeather = () => {
     <tr>
       <td>
       <div class="location-info">
-        <img src="https://www.worldatlas.com/r/w236/img/flag/${weather.country_code.toLowerCase()}-flag.jpg" onerror="this.onerror=null; this.src='/assets/default-flag.png'">
+        <img src="https://www.worldatlas.com/r/w236/img/flag/${weather.country_code.toLowerCase()}-flag.jpg" onerror="this.onerror=null; this.src='/assets/default-flag.webp '"  alt="${weather.country} Flag">
         <div>
         <p>${weather.name}<p>
         <p>${weather.admin1 || weather.admin2}<p>

@@ -4,13 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Weather App - Course</title>
+  <meta name="description" content="Weather App for educational and learning purpose ">
+  <link rel="shortcut icon" href="/assets/favicon.svg">
   <link rel="stylesheet" href="/assets/styles.css">
+  <style>
+    /* Poppins font for titles */
+    /* Lato font for general text */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Lato&display=swap');
+  </style>
 </head>
 <body>
   <header class="header">
     <section class="container">
       <a href="#" class="logo">
-        <img src="/assets/logo.svg" alt="Weather App">
+        <img src="/assets/logo.svg" alt="Weather App Logo">
         Weather App
       </a>
     </section>
@@ -39,7 +46,7 @@
         <div class="show-weather">
           <article class="weather">
             <header>
-              <h3>Current weather</h3>
+              <h2>Current weather</h2>
               <time id="timeWeather"></time>
             </header>
             <div id="currentWeather">
@@ -48,7 +55,7 @@
           </article>
           <div class="weather">
             <header>
-              <h3>Forecast weather</h3>
+              <h2>Forecast weather</h2>
             </header>  
             <div id="forecastWeather">
             </div>
@@ -76,6 +83,11 @@
       </div>
     </section>
   </main>
+  <footer>
+    <summary>
+      © 2024 | Made with ❤️ by (<a href="https://github.com/davilacode/fullstack-frontend" target="_blank" rel="noreferrer noopener">DavilaCode</a>)
+    </summary>
+  </footer>
   <script src="/assets/main.js"></script>
 </body>
 </html>
