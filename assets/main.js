@@ -19,7 +19,7 @@ const getLocationName = async ({latitude, longitude}) => {
     showLocationInfo({ name: address.county, admin1: address.state, country: address.country, country_code: address.country_code })
     getWeather({ latitude, longitude })
 
-    setLocalStorage({ name: address.county, admin1: address.state, country: address.country, country_code: address.country_code, latitude, longitude })
+    setLocationWeather({ name: address.county, admin1: address.state, country: address.country, country_code: address.country_code, latitude, longitude })
   } catch (error) {
     console.log(error)
   }
@@ -115,7 +115,7 @@ const selectLocation = (element) => {
   showLocationInfo(dataLocation)
   getWeather(dataLocation)
 
-  setLocalStorage(dataLocation)
+  setLocationWeather(dataLocation)
 }
 
 function getLocation() {
@@ -134,20 +134,38 @@ function getLocation() {
 getLocation()
 
 // LocalStorage
-const setLocalStorage = (info) => {
-  localStorage.setItem(`${info.latitude.toFixed(2)}+${info.longitude.toFixed(2)}`, JSON.stringify(info))
+const setLocationWeather = (info) => {
+  const weatherData = getLocationWeather() || []
+  const weatherLength = weatherData.length
+
+  const newData = [...weatherData, {id: weatherLength+1, ...info}]
+
+  localStorage.setItem("indexWeather", JSON.stringify(newData))
 }
 
 const updateLocalStorage = (info) => {
-  let tempInfo = JSON.parse(localStorage.getItem(`${info.latitude.toFixed(2)}+${info.longitude.toFixed(2)}`))
-  tempInfo = {...tempInfo, ...info}
-  localStorage.setItem(`${info.latitude.toFixed(2)}+${info.longitude.toFixed(2)}`, JSON.stringify(tempInfo))
+  const weatherData = getLocationWeather() || []
+  const weatherLength = weatherData.length
+  tempInfo = {...weatherData[weatherLength-1], ...info}
+
+  weatherData[weatherLength-1] = tempInfo
+
+  localStorage.setItem("indexWeather", JSON.stringify(weatherData))
+}
+
+const deleteLocalStorage = (id) => {
+  let weatherData = getLocationWeather()
+  weatherData = weatherData.filter(weather => weather.id !== id);
+  localStorage.setItem("indexWeather", JSON.stringify(weatherData))
+}
+
+const getLocationWeather = () => {
+  const data = JSON.parse(localStorage.getItem(`indexWeather`))
+  return data
 }
 
 const showLocalStorage = () => {
-  Object.keys(localStorage).forEach(key => [
-    console.log(localStorage.getItem(key))
-  ])
+  console.log(JSON.parse(localStorage.getItem("indexWeather")))
 }
 
 showLocalStorage()
