@@ -19,6 +19,4 @@ The project is a classic Weather app, the app fetch the weather using the Geoloc
 Palette colors
 ![Palette](./documentation/assets/palette.png)
 
-Fonts: Poppins for titles and Raleway for text
-
-
+Fonts: Poppins for titles and Lato for text
