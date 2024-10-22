@@ -36,15 +36,43 @@
     <section class="wrap-weather">
       <div class="container">
         <div id="locationWeather"></div>
-        <article class="weather">
-          <header>
-            <h3>Current weather</h3>
-            <time id="timeWeather"></time>
-          </header>
-          <div id="currentWeather">
+        <div class="show-weather">
+          <article class="weather">
+            <header>
+              <h3>Current weather</h3>
+              <time id="timeWeather"></time>
+            </header>
+            <div id="currentWeather">
+            </div>
+            <div id="additionalInfo"></div>
+          </article>
+          <div class="weather">
+            <header>
+              <h3>Forecast weather</h3>
+            </header>  
+            <div id="forecastWeather">
+            </div>
           </div>
-          <div id="additionalInfo"></div>
-        </article>
+        </div>
+      </div>
+    </section>
+    <section class="wrap-previous-weather">
+    </section>
+    <section class="wrap-list-weather">
+      <div class="container">
+        <table>
+          <thead>
+            <tr>
+              <th>Location</th>
+              <th>Temp</th>
+              <th>Time</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="listWeather">
+            
+          </tbody>
+        </table>
       </div>
     </section>
   </main>

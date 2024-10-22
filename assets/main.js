@@ -34,6 +34,7 @@ const getWeather = async ({latitude, longitude, timezone = "America/New_York" })
     delete data.longitude
     showWeatherInfo(data)
     updateLocalStorage({latitude, longitude, ...data})
+    showAllLocationWeather()
   } catch (error) {
     console.log(error)
   }
@@ -47,6 +48,7 @@ const searchForm = document.getElementById('searchLocationForm');
 const locationWeather = document.getElementById('locationWeather');
 const timeWeather = document.getElementById('timeWeather');
 const currentWeather = document.getElementById('currentWeather');
+const forecastWeather = document.getElementById('forecastWeather');
 const additionalInfo = document.getElementById('additionalInfo');
 
 const showNotResults = () => {
@@ -76,7 +78,7 @@ const showLocationList = (locations) => {
   wrapResults.classList.add('open')
 }
 
-const showWeatherInfo = ({current, current_units, ...rest}) => {
+const showWeatherInfo = ({current, current_units, daily, daily_units, ...rest}) => {
   const newTime = new Date(current.time).toLocaleString("en-US", { timeStyle: "short", hour12: false})
   
   timeWeather.innerHTML = `Weather time: ${newTime} (${rest.timezone_abbreviation})`
@@ -94,6 +96,21 @@ const showWeatherInfo = ({current, current_units, ...rest}) => {
     <h3>Humidity</h3>
     <p>${current.relative_humidity_2m} ${current_units.relative_humidity_2m}</p>
   `;
+
+  forecastWeather.innerHTML = ''
+  daily.temperature_2m_max.map((temp, i) => {
+    forecastWeather.innerHTML += `
+      <article>
+        <h4>
+          ${new Intl.DateTimeFormat('en-VE', {weekday: 'short'}).format(new Date(daily.time[i]))}
+          ${daily.time[i].slice(-2)}
+        </h4>        
+        <span>${temp+daily_units.temperature_2m_max}</span>
+        <span>${daily.temperature_2m_min[i]+daily_units.temperature_2m_max}</span>
+      </article>
+    `;
+  })
+
 }
 
 const showLocationInfo = (location) => {
@@ -114,10 +131,11 @@ const selectLocation = (element) => {
   const dataLocation = JSON.parse(element.dataset.location)
   showLocationInfo(dataLocation)
   getWeather(dataLocation)
-
   setLocationWeather(dataLocation)
+  showAllLocationWeather()
 }
 
+// Geolocation API
 function getLocation() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(position => { 
@@ -138,13 +156,13 @@ const setLocationWeather = (info) => {
   const weatherData = getLocationWeather() || []
   const weatherLength = weatherData.length
 
-  const newData = [...weatherData, {id: weatherLength+1, ...info}]
+  const newData = [...weatherData, {...info, id: weatherLength+1}]
 
   localStorage.setItem("indexWeather", JSON.stringify(newData))
 }
 
 const updateLocalStorage = (info) => {
-  const weatherData = getLocationWeather() || []
+  const weatherData = getLocationWeather()
   const weatherLength = weatherData.length
   tempInfo = {...weatherData[weatherLength-1], ...info}
 
@@ -153,10 +171,13 @@ const updateLocalStorage = (info) => {
   localStorage.setItem("indexWeather", JSON.stringify(weatherData))
 }
 
-const deleteLocalStorage = (id) => {
+const deleteLocalStorage = (e, id) => {
+  let rowList = e.closest('tr')
+  rowList.remove()
   let weatherData = getLocationWeather()
   weatherData = weatherData.filter(weather => weather.id !== id);
   localStorage.setItem("indexWeather", JSON.stringify(weatherData))
+  showAllLocationWeather()
 }
 
 const getLocationWeather = () => {
@@ -164,8 +185,45 @@ const getLocationWeather = () => {
   return data
 }
 
-const showLocalStorage = () => {
-  console.log(JSON.parse(localStorage.getItem("indexWeather")))
+const showLocationWeather= (id) => {
+  const weatherData = getLocationWeather()
+  const weatherInfo = weatherData.filter(weather => weather.id === id);
+  showWeatherInfo(...weatherInfo)
+  showLocationInfo(...weatherInfo)
 }
 
-showLocalStorage()
+const showAllLocationWeather = () => {
+  const weatherData = getLocationWeather() || []
+  const weatherList = document.getElementById('listWeather')
+  weatherList.innerHTML = "";
+  weatherData.map(weather => {
+    const newTime = new Date(weather.current.time).toLocaleString("en-US", { timeStyle: "short", hour12: false})
+
+    weatherList.innerHTML += `
+    <tr>
+      <td>
+      <div class="location-info">
+        <img src="https://www.worldatlas.com/r/w236/img/flag/${weather.country_code.toLowerCase()}-flag.jpg" onerror="this.onerror=null; this.src='/assets/default-flag.png'">
+        <div>
+        <p>${weather.name}<p>
+        <p>${weather.admin1 || weather.admin2}<p>
+        </div>
+      </div>
+      </td>
+      <td>
+        ${weather.current.temperature_2m}${weather.current_units.temperature_2m}
+      </td>
+      <td>
+        ${newTime} (${weather.timezone_abbreviation})
+      </td>
+      <td>
+        <button class="btn btn-show" onclick="showLocationWeather(${weather.id})">Show</button>
+        <button class="btn btn-delete" onclick="deleteLocalStorage(this, ${weather.id})">Delete</button>
+      </td>
+    </tr>`
+  })
+}
+
+window.addEventListener("storage", () => {
+  showAllLocationWeather()
+})
